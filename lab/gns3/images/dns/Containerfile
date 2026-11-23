@@ -1,0 +1,8 @@
+# RTS GNS3 lab - dns: dnsmasq filter DNS di 10.10.1.53
+FROM docker.io/library/alpine:3.22
+RUN apk add --no-cache dnsmasq bind-tools iproute2
+COPY start.sh dns-set-filter.sh /lab/
+COPY dnsmasq.conf /etc/dnsmasq.conf
+RUN chmod +x /lab/*.sh
+ENTRYPOINT []
+CMD ["/lab/start.sh"]

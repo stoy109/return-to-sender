@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DEMO — JNE Paket Tertunda (bukan situs asli)</title>
+  <style>
+    :root { color-scheme: light; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f4f1ea;
+      color: #1b1b1b;
+    }
+    .banner {
+      background: #8b1e1e;
+      color: #fff;
+      text-align: center;
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1rem;
+    }
+    main {
+      max-width: 36rem;
+      margin: 2.5rem auto;
+      padding: 1.75rem 1.5rem;
+      background: #fff;
+      border: 2px dashed #8b1e1e;
+    }
+    h1 { margin: 0 0 0.5rem; font-size: 1.6rem; }
+    .muted { color: #555; font-family: system-ui, sans-serif; font-size: 0.95rem; }
+    ul { font-family: system-ui, sans-serif; line-height: 1.55; }
+  </style>
+</head>
+<body>
+  <div class="banner">HALAMAN DEMO TUGAS NETWORK SECURITY — BUKAN SITUS JNE ASLI</div>
+  <main>
+    <h1>JNE Paket Tertunda</h1>
+    <p class="muted">Domain palsu: jne-paket-tertunda.example &nbsp;·&nbsp; 10.10.2.66</p>
+    <p>Ini halaman statis untuk lab <strong>Return to Sender</strong> (Group 2). Halaman ini sengaja terlihat seperti bait paket tertunda, tapi <strong>tidak ada form</strong>, <strong>tidak ada tombol login</strong>, dan <strong>tidak mengumpulkan data apa pun</strong>.</p>
+    <ul>
+      <li>Kalau filter DNS/firewall <em>mati</em>, klien LAN bisa membuka halaman ini.</li>
+      <li>Kalau filter <em>nyala</em>, nama domain jadi NXDOMAIN dan IP 10.10.2.66 di-drop iptables di gateway.</li>
+    </ul>
+    <p class="muted">President University · Network Security · Return to Sender</p>
+  </main>
+</body>
+</html>

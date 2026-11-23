@@ -1,0 +1,5 @@
+[netdevops.fury.site_yum_]
+name=Containerlab
+baseurl=https://netdevops.fury.site/yum/
+enabled=1
+gpgcheck=0

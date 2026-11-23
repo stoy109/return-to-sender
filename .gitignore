@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dist-ssr/
+*.local
+*.log
+.DS_Store
+# lab captures and runtime state
+captures/*.pcap
+captures/*.pcapng
+captures/*.pcap*
+lab/containerlab/clab-*/

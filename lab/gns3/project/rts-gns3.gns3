@@ -1,0 +1,462 @@
+{
+    "auto_close": true,
+    "auto_open": false,
+    "auto_start": false,
+    "drawing_grid_size": 25,
+    "grid_size": 75,
+    "name": "rts-gns3",
+    "project_id": "5e7a2c1d-0f4b-4c8e-9a61-2b3d4e5f6a70",
+    "revision": 9,
+    "scene_height": 1000,
+    "scene_width": 2000,
+    "show_grid": false,
+    "show_interface_labels": true,
+    "show_layers": false,
+    "snap_to_grid": false,
+    "supplier": null,
+    "topology": {
+        "computes": [],
+        "drawings": [
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000001",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"450\" width=\"470\"><rect fill=\"#DDE3F5\" fill-opacity=\"0.35\" height=\"450\" stroke=\"#2B3A8C\" stroke-width=\"2\" stroke-dasharray=\"5,3\" width=\"470\" /></svg>",
+                "x": -480,
+                "y": -230,
+                "z": 0
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000002",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"220\" width=\"220\"><rect fill=\"#F8DAD7\" fill-opacity=\"0.35\" height=\"220\" stroke=\"#C8362A\" stroke-width=\"2\" stroke-dasharray=\"5,3\" width=\"220\" /></svg>",
+                "x": 230,
+                "y": -120,
+                "z": 0
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000003",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"26\" width=\"145\"><text fill=\"#2B3A8C\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"13\" font-weight=\"bold\">LAN 10.10.1.0/24</text></svg>",
+                "x": -470,
+                "y": -265,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000004",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"26\" width=\"145\"><text fill=\"#C8362A\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"13\" font-weight=\"bold\">DMZ 10.10.2.0/24</text></svg>",
+                "x": 240,
+                "y": -155,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000005",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"20\" width=\"75\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"10\" font-weight=\"normal\">10.10.1.10</text></svg>",
+                "x": -470,
+                "y": -120,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000006",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"20\" width=\"218\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"10\" font-weight=\"normal\">10.10.1.53  dnsmasq (DNS filter)</text></svg>",
+                "x": -470,
+                "y": 160,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000007",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"20\" width=\"114\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"10\" font-weight=\"normal\">Linux bridge br0</text></svg>",
+                "x": -205,
+                "y": 40,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000008",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"40\" width=\"263\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"10\" font-weight=\"normal\">10.10.1.1 | 10.10.2.1\niptables firewall</text></svg>",
+                "x": 40,
+                "y": 40,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000009",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"20\" width=\"153\"><text fill=\"#000000\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"10\" font-weight=\"normal\">10.10.2.66  nginx DEMO</text></svg>",
+                "x": 300,
+                "y": 40,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000010",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"30\" width=\"585\"><text fill=\"#2B3A8C\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"15\" font-weight=\"bold\">Return to Sender - Layer 2: DNS filter + firewall (Group 2)</text></svg>",
+                "x": -480,
+                "y": -330,
+                "z": 2
+            },
+            {
+                "drawing_id": "5e7a2c1d-0f4b-4c8e-9a61-100000000011",
+                "locked": false,
+                "rotation": 0,
+                "svg": "<svg height=\"20\" width=\"530\"><text fill=\"#555555\" fill-opacity=\"1.0\" font-family=\"Sans Serif\" font-size=\"10\" font-weight=\"normal\">jne-paket-tertunda.example  |  filter OFF: 200 OK  |  filter ON: NXDOMAIN + DROP</text></svg>",
+                "x": -480,
+                "y": 250,
+                "z": 2
+            }
+        ],
+        "links": [
+            {
+                "filters": {},
+                "link_id": "5e7a2c1d-0f4b-4c8e-9a61-200000000001",
+                "link_style": {},
+                "nodes": [
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth0",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000001",
+                        "port_number": 0
+                    },
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth0",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000003",
+                        "port_number": 0
+                    }
+                ],
+                "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "5e7a2c1d-0f4b-4c8e-9a61-200000000002",
+                "link_style": {},
+                "nodes": [
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth0",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000002",
+                        "port_number": 0
+                    },
+                    {
+                        "adapter_number": 1,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth1",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000003",
+                        "port_number": 0
+                    }
+                ],
+                "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "5e7a2c1d-0f4b-4c8e-9a61-200000000003",
+                "link_style": {},
+                "nodes": [
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth0",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000004",
+                        "port_number": 0
+                    },
+                    {
+                        "adapter_number": 2,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth2",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000003",
+                        "port_number": 0
+                    }
+                ],
+                "suspend": false
+            },
+            {
+                "filters": {},
+                "link_id": "5e7a2c1d-0f4b-4c8e-9a61-200000000004",
+                "link_style": {},
+                "nodes": [
+                    {
+                        "adapter_number": 1,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth1",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000004",
+                        "port_number": 0
+                    },
+                    {
+                        "adapter_number": 0,
+                        "label": {
+                            "rotation": 0,
+                            "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                            "text": "eth0",
+                            "x": 20,
+                            "y": 20
+                        },
+                        "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000005",
+                        "port_number": 0
+                    }
+                ],
+                "suspend": false
+            }
+        ],
+        "nodes": [
+            {
+                "compute_id": "local",
+                "console": null,
+                "console_auto_start": false,
+                "console_type": "none",
+                "custom_adapters": [],
+                "first_port_name": null,
+                "height": 59,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "victim",
+                    "x": null,
+                    "y": -25
+                },
+                "locked": false,
+                "name": "victim",
+                "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000001",
+                "node_type": "docker",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "adapters": 1,
+                    "aux": null,
+                    "console_http_path": "/",
+                    "console_http_port": 80,
+                    "console_resolution": "1024x768",
+                    "environment": null,
+                    "extra_hosts": null,
+                    "extra_volumes": [],
+                    "image": "localhost/rts-victim:latest",
+                    "start_command": null,
+                    "usage": "Return to Sender lab node (victim). Shell: ./scripts/shell.sh victim"
+                },
+                "symbol": ":/symbols/classic/computer.svg",
+                "template_id": null,
+                "width": 65,
+                "x": -420,
+                "y": -170,
+                "z": 1
+            },
+            {
+                "compute_id": "local",
+                "console": null,
+                "console_auto_start": false,
+                "console_type": "none",
+                "custom_adapters": [],
+                "first_port_name": null,
+                "height": 59,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "dns",
+                    "x": null,
+                    "y": -25
+                },
+                "locked": false,
+                "name": "dns",
+                "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000002",
+                "node_type": "docker",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "adapters": 1,
+                    "aux": null,
+                    "console_http_path": "/",
+                    "console_http_port": 80,
+                    "console_resolution": "1024x768",
+                    "environment": null,
+                    "extra_hosts": null,
+                    "extra_volumes": [],
+                    "image": "localhost/rts-dns:latest",
+                    "start_command": null,
+                    "usage": "Return to Sender lab node (dns). Shell: ./scripts/shell.sh dns"
+                },
+                "symbol": ":/symbols/classic/server.svg",
+                "template_id": null,
+                "width": 65,
+                "x": -420,
+                "y": 110,
+                "z": 1
+            },
+            {
+                "compute_id": "local",
+                "console": null,
+                "console_auto_start": false,
+                "console_type": "none",
+                "custom_adapters": [],
+                "first_port_name": null,
+                "height": 59,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "sw-lan",
+                    "x": null,
+                    "y": -25
+                },
+                "locked": false,
+                "name": "sw-lan",
+                "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000003",
+                "node_type": "docker",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "adapters": 4,
+                    "aux": null,
+                    "console_http_path": "/",
+                    "console_http_port": 80,
+                    "console_resolution": "1024x768",
+                    "environment": null,
+                    "extra_hosts": null,
+                    "extra_volumes": [],
+                    "image": "localhost/rts-sw:latest",
+                    "start_command": null,
+                    "usage": "Return to Sender lab node (sw-lan). Shell: ./scripts/shell.sh sw-lan"
+                },
+                "symbol": ":/symbols/classic/ethernet_switch.svg",
+                "template_id": null,
+                "width": 65,
+                "x": -170,
+                "y": -30,
+                "z": 1
+            },
+            {
+                "compute_id": "local",
+                "console": null,
+                "console_auto_start": false,
+                "console_type": "none",
+                "custom_adapters": [],
+                "first_port_name": null,
+                "height": 59,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "gw",
+                    "x": null,
+                    "y": -25
+                },
+                "locked": false,
+                "name": "gw",
+                "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000004",
+                "node_type": "docker",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "adapters": 2,
+                    "aux": null,
+                    "console_http_path": "/",
+                    "console_http_port": 80,
+                    "console_resolution": "1024x768",
+                    "environment": null,
+                    "extra_hosts": null,
+                    "extra_volumes": [],
+                    "image": "localhost/rts-gw:latest",
+                    "start_command": null,
+                    "usage": "Return to Sender lab node (gw). Shell: ./scripts/shell.sh gw"
+                },
+                "symbol": ":/symbols/classic/firewall.svg",
+                "template_id": null,
+                "width": 65,
+                "x": 80,
+                "y": -30,
+                "z": 1
+            },
+            {
+                "compute_id": "local",
+                "console": null,
+                "console_auto_start": false,
+                "console_type": "none",
+                "custom_adapters": [],
+                "first_port_name": null,
+                "height": 59,
+                "label": {
+                    "rotation": 0,
+                    "style": "font-family: TypeWriter;font-size: 10.0;font-weight: bold;fill: #000000;fill-opacity: 1.0;",
+                    "text": "phish",
+                    "x": null,
+                    "y": -25
+                },
+                "locked": false,
+                "name": "phish",
+                "node_id": "5e7a2c1d-0f4b-4c8e-9a61-000000000005",
+                "node_type": "docker",
+                "port_name_format": "Ethernet{0}",
+                "port_segment_size": 0,
+                "properties": {
+                    "adapters": 1,
+                    "aux": null,
+                    "console_http_path": "/",
+                    "console_http_port": 80,
+                    "console_resolution": "1024x768",
+                    "environment": null,
+                    "extra_hosts": null,
+                    "extra_volumes": [],
+                    "image": "localhost/rts-phish:latest",
+                    "start_command": null,
+                    "usage": "Return to Sender lab node (phish). Shell: ./scripts/shell.sh phish"
+                },
+                "symbol": ":/symbols/classic/server.svg",
+                "template_id": null,
+                "width": 65,
+                "x": 330,
+                "y": -30,
+                "z": 1
+            }
+        ]
+    },
+    "type": "topology",
+    "variables": null,
+    "version": "2.2.61",
+    "zoom": 100
+}

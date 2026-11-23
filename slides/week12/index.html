@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Return to Sender — Group 2 · Week 12 Progress</title>
+<style>
+@font-face{font-family:'Archivo';src:url('fonts/Archivo-VF.ttf') format('truetype');font-weight:100 900;font-stretch:62% 125%}
+@font-face{font-family:'IBM Plex Sans';src:url('fonts/IBMPlexSans-VF.ttf') format('truetype');font-weight:100 700;font-stretch:85% 100%}
+@font-face{font-family:'IBM Plex Mono';src:url('fonts/IBMPlexMono-Medium.ttf') format('truetype');font-weight:500}
+:root{
+  --paper:#EEF0F3; --card:#FFFFFF; --ink:#16181D; --muted:#5A606B;
+  --blue:#2B3A8C; --red:#C8362A; --hi:#F5DC4A; --rule:#C9CED6;
+  --pattern:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='72' height='36'><g font-family='IBM Plex Mono,monospace' font-size='8' font-weight='700' fill='%232B3A8C' fill-opacity='0.09' letter-spacing='1'><text x='2' y='14' transform='rotate(-24 20 12)'>LAYER</text><text x='38' y='32' transform='rotate(-24 56 30)'>LAYER</text></g></svg>");
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--ink);overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;background:var(--paper)}
+.slide{position:absolute;inset:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:30px;line-height:1.35;display:none;overflow:hidden}
+.slide.on{display:block}
+.slide.dark{background:var(--ink);color:var(--paper)}
+.abs{position:absolute}
+h1,h2,.hd{font-family:'Archivo',sans-serif;font-weight:800;font-stretch:118%;letter-spacing:-.02em;margin:0;line-height:1.02}
+h2{position:absolute;left:96px;top:96px;width:1288px;font-size:68px}
+.mono{font-family:'IBM Plex Mono',monospace;font-weight:500}
+mark{background:var(--hi);color:inherit;padding:0 .12em;margin:0 -.04em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.dark mark{color:var(--ink)}
+.muted{color:var(--muted)}
+.num{position:absolute;right:96px;bottom:36px;font:500 22px 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.06em}
+.dark .num{color:#9aa0ab}
+.step-h{opacity:0;visibility:hidden}
+
+/* scam card (envelope) */
+.sc{background:var(--card);color:var(--ink);border:1px solid var(--rule);padding:36px 40px 40px;position:relative;box-shadow:0 3px 0 rgba(22,24,29,.06)}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-start;font:500 22px 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.06em;border-bottom:1px solid var(--rule);padding-bottom:20px;margin-bottom:28px}
+.sc-post{width:72px;height:88px;border:2px dashed var(--rule);flex:none}
+.sc-msg{font:500 30px/1.5 'IBM Plex Mono',monospace}
+.lnk{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:7px}
+
+/* stamps: red = threat only; .ok = blue (status) */
+.stamp{position:absolute;font-family:'Archivo',sans-serif;font-weight:800;font-stretch:112%;letter-spacing:.08em;text-transform:uppercase;color:var(--red);border:4px solid var(--red);border-radius:6px;padding:.18em .5em .14em;line-height:1;white-space:nowrap;outline:1.5px solid var(--red);outline-offset:-9px;mix-blend-mode:multiply;transform:rotate(var(--r,-4deg));opacity:.93;z-index:5}
+.stamp.ok{color:var(--blue);border-color:var(--blue);outline-color:var(--blue)}
+.stamp.s-sm{font-size:15px;border-width:2.5px;outline-width:1px;outline-offset:-6px;border-radius:4px}
+.stamp.s-md{font-size:26px;border-width:3px;outline-offset:-7px}
+.stamp.s-lg{font-size:48px;border-width:6px;outline-width:2px;outline-offset:-12px}
+.stamp.inl{position:relative;display:inline-block}
+.dark .stamp{mix-blend-mode:normal}
+
+/* layer strip (compact layer stack) */
+.strip{position:absolute;left:1416px;top:100px;width:408px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.seg{position:relative;height:72px;border:2px solid var(--blue);background-color:#fff;background-image:var(--pattern);padding:9px 10px;font:500 14px/1.35 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.03em;overflow:hidden}
+.seg .fill{position:absolute;inset:0;background:var(--blue);transform:scaleX(0);transform-origin:left center}
+.seg.on .fill{transform:scaleX(1)}
+.seg span{position:relative;z-index:1}
+.seg.on{color:#fff}
+
+/* boxes */
+.box{position:absolute;background:#fff;border:1px solid var(--rule);padding:28px 32px}
+.box h3{font-family:'Archivo';font-weight:800;font-stretch:112%;font-size:30px;letter-spacing:-.01em;margin:0 0 10px;line-height:1.1}
+.box p{margin:0;font-size:26px;line-height:1.35}
+.idx{font:500 20px 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.06em;display:block;margin-bottom:10px}
+.shot{position:absolute;background:#fff;border:1px solid var(--rule);box-shadow:0 6px 0 rgba(22,24,29,.07);padding:0;overflow:hidden}
+.shot img{display:block;width:100%;height:auto}
+.cap{position:absolute;font:500 18px 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.05em}
+
+/* feature list */
+.feat{display:grid;grid-template-columns:230px 1fr;column-gap:24px;padding:20px 0;border-top:1px solid var(--rule)}
+.feat:first-child{border-top:2px solid var(--ink)}
+.feat .k{font:500 20px/1.4 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.05em;padding-top:4px}
+.feat .v{font-size:27px;line-height:1.32}
+
+/* table */
+table.t{border-collapse:collapse;width:100%;font-size:26px}
+.t th{font:500 18px 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.06em;text-align:left;padding:0 16px 14px;border-bottom:2px solid var(--ink)}
+.t td{padding:0 16px;height:78px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.t tr.hl td{background:#fff}
+.bar{position:relative;display:inline-block;width:220px;height:14px;background:#fff;border:1px solid var(--rule);vertical-align:middle;margin-right:18px}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--ink)}
+.bar i.r{background:var(--red)}
+.sv{font:500 26px 'IBM Plex Mono',monospace}
+.vd{font-weight:500}
+.vd.r{color:var(--red)} .vd.b{color:var(--blue)}
+
+
+/* topology + packet trace (week 12 layer 2 lab) */
+.nd{background:#fff;border:2px solid var(--blue);padding:14px 20px 14px;min-height:148px}
+.nd .role{font:500 15px 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.07em}
+.nd .nm{font-family:'Archivo',sans-serif;font-weight:800;font-stretch:112%;font-size:32px;margin:8px 0 6px;line-height:1;letter-spacing:-.02em}
+.nd .ip{font:500 20px 'IBM Plex Mono',monospace}
+.nd .ds{margin:8px 0 0;font-size:20px;line-height:1.25;color:var(--muted)}
+.arr{display:flex;align-items:center;justify-content:center;color:var(--blue);font:800 36px 'Archivo',sans-serif;line-height:1}
+.cmp{background:#fff;border:1px solid var(--rule);padding:22px 32px 18px}
+.cmp.on{border:2px solid var(--blue)}
+.cmp .rows{margin-top:12px}
+.cmp .row{display:grid;grid-template-columns:210px 1fr;gap:16px;padding:9px 0;border-top:1px solid var(--rule);font-size:24px;line-height:1.3}
+.cmp .row:first-child{border-top:2px solid var(--ink)}
+.cmp .k{font:500 16px/1.35 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.05em;padding-top:4px}
+.cmp .v{font-size:24px;line-height:1.3}
+.trace{background:var(--ink);color:var(--paper);overflow:hidden}
+.trace .tbar{display:flex;justify-content:space-between;align-items:baseline;width:auto;height:auto;margin:0;border:0;background:var(--blue);color:#fff;padding:16px 22px;font:500 16px 'IBM Plex Mono',monospace;letter-spacing:.06em}
+.trace .th,.trace .tr{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:16px 22px;font:500 22px/1.35 'IBM Plex Mono',monospace}
+.trace .th{color:#9aa0ab;font-size:15px;letter-spacing:.06em;border-bottom:1px solid #3a3f48}
+.trace .tr{border-bottom:1px solid #3a3f48}
+.trace .tr:last-child{border-bottom:0}
+.trace .hit{color:var(--hi)}
+.trace .warn{color:#f3b4ae}
+.trace .ok{color:#d5dcf7}
+.trace .note{padding:16px 22px 20px;font:500 16px/1.4 'IBM Plex Mono',monospace;color:#9aa0ab;border-top:1px solid #3a3f48}
+
+/* notes panel */
+#notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#fff;color:var(--ink);border-top:3px solid var(--blue);font:400 17px/1.5 'IBM Plex Sans',sans-serif;padding:16px 28px 22px;display:none;z-index:50}
+#notes.show{display:block}
+#notes .who{font:500 14px 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.06em;margin-bottom:6px}
+aside.notes{display:none}
+#hint{position:fixed;left:12px;bottom:10px;font:500 12px 'IBM Plex Mono',monospace;color:#7a808b;z-index:40;opacity:.8}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1 TITLE -->
+<section class="slide dark" data-max="0">
+  <div class="abs mono" style="left:96px;top:180px;font-size:24px;letter-spacing:.08em;color:var(--hi)">WEEK 12 · PROGRESS · MON 16 NOV 2026</div>
+  <h1 class="abs" style="left:96px;top:250px;width:980px;font-size:120px;font-stretch:125%">Return to Sender</h1>
+  <p class="abs" style="left:96px;top:540px;width:1000px;margin:0;font-family:'Archivo';font-weight:800;font-stretch:112%;font-size:44px;line-height:1.15;letter-spacing:-.01em;color:#dfe2e7">Week 12: the assistant now<br>remembers <mark>repeat senders</mark></p>
+  <div class="abs mono" style="left:96px;bottom:96px;font-size:22px;line-height:1.6;color:#c9ced6;letter-spacing:.04em">GROUP 2 — CASEY (HERALDO) · ALFA · FERISCA<br>PRESIDENT UNIVERSITY · NETWORK SECURITY<br>LECTURER: SIR TJONG WAN SEN · FINAL PROJECT PROGRESS</div>
+  <div class="sc abs" style="left:1130px;top:300px;width:680px;transform:rotate(3deg)">
+    <div class="sc-top"><span>SMS · FROM: 0812-3456-7890<br><span style="font-size:16px">FICTIONAL SAMPLE · 2ND MESSAGE</span></span><span class="sc-post"></span></div>
+    <div class="sc-msg">[JNE] Reminder: your package is on hold. Pay shipping today or it will be returned.<br><span class="lnk">bit.ly/jne-cek-paket</span></div>
+    <div class="stamp s-lg" style="right:14px;top:30px;font-size:34px;--r:-8deg">REPEAT</div>
+  </div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Casey">Good afternoon, Sir, and everyone. We are Group 2: I'm Casey, with Alfa and Ferisca. Our project is Return to Sender, a layered defense against phishing and scams: laws and habits, the network, accounts and apps, and a Stop-Check-Report assistant. This is our week 12 progress. Today we show what changed after your feedback, and the second version of our assistant.</aside>
+</section>
+
+<!-- 2 FEEDBACK -->
+<section class="slide" data-max="1">
+  <h2>Last week's feedback: report it <mark>up</mark>, not back.</h2>
+  <div class="abs mono" style="left:96px;top:258px;font-size:20px;color:var(--muted);letter-spacing:.06em">SIR TJONG WAN SEN · SESSION 2026-11-09</div>
+  <div class="abs" style="left:96px;top:340px;width:660px">
+    <div class="hd" style="font-size:160px;line-height:.6;color:var(--blue);height:70px">“</div>
+    <div class="hd" style="font-size:52px;line-height:1.12;font-stretch:110%">Nobody can be anonymous if ID &amp; regulation are set <mark>properly</mark>.</div>
+    <div class="mono" style="margin-top:28px;font-size:20px;color:var(--muted);letter-spacing:.05em">— SIR TJONG WAN SEN</div>
+    <div style="margin-top:56px;display:flex;align-items:center;gap:28px">
+      <span class="mono" style="font-size:20px;color:var(--muted);letter-spacing:.06em">VERDICT</span>
+      <div class="stamp ok s-lg inl" data-step="1" style="--r:-4deg">ON TRACK</div>
+    </div>
+  </div>
+  <div class="abs" style="left:840px;top:330px;width:984px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div class="box" style="position:relative;height:196px"><span class="idx">01 · THE NAME</span><p>“Return to sender” = <mark>report to the authority</mark>, not send it back to the scammer.</p></div>
+    <div class="box" style="position:relative;height:196px"><span class="idx">02 · REMEMBER</span><p>Save known scammer accounts.</p></div>
+    <div class="box" style="position:relative;height:196px"><span class="idx">03 · REPEAT SENDER</span><p>Escalate to the provider admin (e.g. Gmail) <mark>with proof</mark>.</p></div>
+    <div class="box" style="position:relative;height:196px"><span class="idx">04 · DUTY</span><p>Every infrastructure admin has a duty to secure it.</p></div>
+    <div class="box" style="position:relative;height:196px"><span class="idx">05 · TRACING</span><p>Reports should force the provider to trace the sender.</p></div>
+    <div class="box" style="position:relative;height:196px"><span class="idx">06 · WHO ELSE</span><p>Also report to IASC and the cybercrime police.</p></div>
+  </div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Casey">Last week, Sir, you gave us clear feedback. First, the name. Return to Sender does not mean sending the scam back to the scammer. It means reporting it to the authority. Second, save known scammer accounts. Third, if the same sender comes back, escalate to the provider's admin, for example Gmail, with proof. You reminded us that every infrastructure admin has a duty to secure it, and that reports should force them to trace the sender. Reports should also go to IASC and the cybercrime police. And you said: nobody can be anonymous if ID and regulation are set properly. Your verdict was that we are on track, so this week we built exactly these points.</aside>
+</section>
+
+<!-- 3 WHAT WE BUILT -->
+<section class="slide" data-layer="4" data-max="0">
+  <h2>MVP v2 remembers <mark>repeat</mark> senders.</h2>
+  <div class="abs" style="left:96px;top:290px;width:940px">
+    <div class="feat"><div class="k">01 THE NAME</div><div class="v">Home screen explains it: hand the scam to those who should stop it, not reply to the scammer.</div></div>
+    <div class="feat"><div class="k">02 KNOWN SENDERS</div><div class="v">Saved on the device (localStorage); export as JSON.</div></div>
+    <div class="feat"><div class="k">03 REPEAT STAMP</div><div class="v"><b style="font-weight:500">+36</b> to the risk score, capped at 100.</div></div>
+    <div class="feat"><div class="k">04 FOLLOW-UP</div><div class="v">Complaint draft for Gmail, Outlook, generic email, or phone operator &amp; WhatsApp. Cites the first report date + evidence.</div></div>
+    <div class="feat"><div class="k">05 SUBMIT IT YOURSELF</div><div class="v">Buttons open IASC, CekRekening, Patroli Siber. <mark>Nothing is auto-sent.</mark></div></div>
+  </div>
+  <div class="shot" style="left:1104px;top:290px;width:720px"><img src="img/crop-repeat.png" alt="App result screen: REPEAT banner above a 100/100 Likely scam score"></div>
+  <div class="cap" style="left:1104px;top:968px">APP SCREENSHOT · REPEAT BANNER</div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Alfa">This is MVP version two. First, the home screen now explains the name: we hand the scam to the people who should stop it, not reply to the scammer. Second, a Known senders list. It is saved on the device in localStorage, and you can export it as JSON. Third, when a message comes from a saved sender, the app adds a REPEAT stamp, which adds 36 to the score, capped at 100. Fourth, a Write a follow-up button. It makes a complaint draft for Gmail, Outlook, a generic email, or the phone operator and WhatsApp, and it cites the first report date and the evidence. Finally, buttons open IASC, CekRekening and Patroli Siber. Nothing is sent automatically; the user submits it. Links: iasc.ojk.go.id, cekrekening.id, patrolisiber.id.</aside>
+</section>
+
+<!-- 4 DEMO FLOW -->
+<section class="slide" data-max="2">
+  <h2 style="width:1160px">Demo: same sender, <mark>second text</mark>.</h2>
+  <div class="abs" style="left:96px;top:270px;width:1160px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px">
+    <div class="box" style="position:relative;height:260px;padding:24px 28px"><span class="idx">1 · INPUT</span><p style="font-size:25px">Second JNE SMS from <span class="mono" style="font-size:23px">0812-3456-7890</span></p><p class="mono" style="margin-top:12px;font-size:17px;color:var(--muted);letter-spacing:.04em">FICTIONAL SAMPLE</p></div>
+    <div class="box" data-step="1" style="position:relative;height:260px;padding:24px 28px"><span class="idx">2 · SCORE</span>
+      <div class="hd" style="font-size:64px;font-stretch:100%;margin-top:4px;white-space:nowrap"><span class="muted">74</span> → <span style="color:var(--red)">100</span></div>
+      <div class="stamp s-md inl" style="margin-top:18px;--r:-4deg">REPEAT +36</div></div>
+    <div class="box" data-step="2" style="position:relative;height:260px;padding:24px 28px"><span class="idx">3 · FOLLOW-UP</span><p style="font-size:25px">Draft to the phone operator &amp; WhatsApp: first report 9 Nov + evidence.</p></div>
+  </div>
+    <div class="shot" style="left:96px;top:596px;width:1000px"><img src="img/crop-known.png" alt="Known senders list with 0812-3456-7890, first reported 9 Nov 2026"></div>
+  <div class="cap" style="left:96px;top:984px">KNOWN SENDERS · SAVED ON 9 NOV (FIRST REPORT)</div>
+  <div class="shot" data-step="2" style="left:1324px;top:200px;width:500px"><img src="img/crop-draft.png" alt="Follow-up draft to the phone operator and WhatsApp"></div>
+  <div class="cap" data-step="2" style="left:1324px;top:962px">FOLLOW-UP DRAFT · NOT SENT</div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Alfa">Here is the demo flow. The number 0812-3456-7890 is a fictional sample. It is already in Known senders from a first package SMS on 9 November. Now a second JNE SMS arrives from the same number. On its own, this text scores 74, likely scam. Because the sender is already on the list, the REPEAT stamp pushes it to 100. Then the user taps Write a follow-up and gets this draft to the phone operator and WhatsApp: I already reported this sender on 9 November, here is the evidence, why is it still active? The user copies it and submits it.</aside>
+</section>
+
+
+<!-- 5 LAYER 2 PROOF -->
+<section class="slide" data-layer="2" data-max="0">
+  <h2>Layer 2 proof: block it <mark>before</mark> the click.</h2>
+  <div class="abs mono" style="left:96px;top:260px;font-size:20px;color:var(--muted);letter-spacing:.06em">CONTAINERLAB · FEDORA / PODMAN · 16 NOV 2026 · ~15:30 WIB · LAB ONLY</div>
+  <div class="abs" style="left:96px;top:308px;width:1728px;display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr;align-items:stretch">
+    <div class="nd"><div class="role">CLIENT</div><div class="nm">victim</div><div class="ip">10.10.1.10</div><div class="ds">LAN host</div></div>
+    <div class="arr">→</div>
+    <div class="nd"><div class="role">DNS FILTER</div><div class="nm">dns</div><div class="ip">10.10.1.53</div><div class="ds">dnsmasq</div></div>
+    <div class="arr">→</div>
+    <div class="nd"><div class="role">ROUTER + FIREWALL</div><div class="nm">gw</div><div class="ip">10.10.1.1 / 10.10.2.1</div><div class="ds">iptables FORWARD</div></div>
+    <div class="arr">→</div>
+    <div class="nd"><div class="role">FAKE JNE PAGE</div><div class="nm">phish</div><div class="ip">10.10.2.66</div><div class="ds">Static DEMO, no form</div></div>
+  </div>
+  <div class="abs mono" style="left:96px;top:478px;font-size:20px;color:var(--muted);letter-spacing:.04em">DOMAIN · <span style="color:var(--ink)">jne-paket-tertunda.example</span> &nbsp;·&nbsp; reserved TLD, not a real site</div>
+  <div class="cmp abs" style="left:96px;top:524px;width:840px;height:460px">
+    <span class="idx">FILTER OFF</span>
+    <div class="hd" style="font-size:40px;font-stretch:110%;line-height:1.1;margin-top:4px;padding-right:200px">The page opens.</div>
+    <div class="stamp s-md" style="right:28px;top:28px;--r:-6deg">REACHED</div>
+    <div class="rows">
+      <div class="row"><div class="k">DNS</div><div class="v">A record <span class="mono" style="font-size:22px">10.10.2.66</span></div></div>
+      <div class="row"><div class="k">GET /</div><div class="v"><span class="mono" style="font-size:22px">HTTP/1.1 200 OK</span></div></div>
+      <div class="row"><div class="k">WIRESHARK</div><div class="v">Packets 6–38: DNS A, then the page</div></div>
+    </div>
+  </div>
+  <div class="cmp on abs" style="left:984px;top:524px;width:840px;height:460px">
+    <span class="idx">FILTER ON</span>
+    <div class="hd" style="font-size:40px;font-stretch:110%;line-height:1.1;margin-top:4px;padding-right:200px">Blocked before the click.</div>
+    <div class="stamp ok s-md" style="right:28px;top:28px;--r:5deg">BLOCKED</div>
+    <div class="rows">
+      <div class="row"><div class="k">DNS</div><div class="v">NXDOMAIN — “No such name”</div></div>
+      <div class="row"><div class="k">CURL BY NAME</div><div class="v">Could not resolve host</div></div>
+      <div class="row"><div class="k">CURL TO IP</div><div class="v">Times out after 5000 ms</div></div>
+      <div class="row"><div class="k">FIREWALL</div><div class="v"><span class="mono" style="font-size:18px;word-break:break-word">iptables -A FORWARD -d 10.10.2.66/32 -j DROP</span></div></div>
+      <div class="row"><div class="k">WIRESHARK</div><div class="v">Packets 39–57: NXDOMAIN, then SYN retransmissions only</div></div>
+    </div>
+  </div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Alfa">This is Layer 2, the network layer. On 16 November we ran a Containerlab lab on Fedora with Podman. Four nodes: a victim PC, a gateway firewall, a DNS filter, and a static fake JNE DEMO page — no forms, no credentials. The demo domain is jne-paket-tertunda.example. With the filter off, DNS returns 10.10.2.66 and the page opens with HTTP 200. With the filter on, DNS answers NXDOMAIN, curl by name cannot resolve the host, and curl to the IP times out after five seconds, because the gateway drops traffic to 10.10.2.66.</aside>
+</section>
+
+<!-- 6 CAPTURE SUMMARY -->
+<section class="slide" data-layer="2" data-max="0">
+  <h2>What the 16 Nov capture <mark>shows</mark>.</h2>
+  <div class="abs mono" style="left:96px;top:196px;width:1288px;font-size:20px;color:var(--muted);letter-spacing:.06em">STYLIZED SUMMARY OF THE 16 NOV 2026 CAPTURE · ~15:30 WIB · NOT A RAW PCAP EXPORT</div>
+  <div class="trace abs" style="left:96px;top:260px;width:840px;height:500px">
+    <div class="tbar"><span>FILTER OFF</span><span>PACKETS 6–38</span></div>
+    <div class="th"><span>PROTO</span><span>INFO</span></div>
+    <div class="tr"><span class="ok">DNS</span><span>jne-paket-tertunda.example  A  10.10.2.66</span></div>
+    <div class="tr"><span class="warn">HTTP</span><span>GET /</span></div>
+    <div class="tr"><span class="warn">HTTP</span><span>HTTP/1.1 200 OK</span></div>
+    <div class="note">The victim resolves the name and the DEMO page is returned.</div>
+  </div>
+  <div class="trace abs" style="left:984px;top:260px;width:840px;height:500px">
+    <div class="tbar"><span>FILTER ON</span><span>PACKETS 39–57</span></div>
+    <div class="th"><span>PROTO</span><span>INFO</span></div>
+    <div class="tr"><span class="hit">DNS</span><span>No such name  (NXDOMAIN)</span></div>
+    <div class="tr"><span class="ok">TCP</span><span>SYN → 10.10.2.66</span></div>
+    <div class="tr"><span class="ok">TCP</span><span>SYN retransmissions only · no handshake</span></div>
+    <div class="note">The name never resolves. Direct-IP SYNs are dropped at gw, so the handshake never completes.</div>
+  </div>
+  <div class="abs" style="left:96px;top:792px;width:1500px;font-size:26px;line-height:1.35">Lab only. A real deployment would be an ISP or campus DNS filter plus a <mark>TrustPositif-style</mark> blocklist. No credentials are collected.</div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Alfa">Here is a summary of that capture, not a raw pcap export. Packets 6 to 38, filter off: DNS answers with the A record, then GET slash, then HTTP 1.1 200 OK. Packets 39 to 57, filter on: DNS says no such name, and we only see SYN retransmissions to the IP — the handshake never completes. So the phishing page is blocked before the click. This is a lab only. A real deployment would be an ISP or campus DNS filter, plus a TrustPositif-style blocklist.</aside>
+</section>
+
+<!-- 7 LAW ANGLE -->
+<section class="slide" data-layer="1" data-max="2">
+  <h2>Law angle: whoever runs the system must <mark>secure</mark> it.</h2>
+  <div class="abs mono" style="left:96px;top:282px;font-size:20px;color:var(--blue);letter-spacing:.06em">GROUP 2'S ROLE · PROVIDER / ADMIN DUTY OF CARE</div>
+  <div class="box" style="left:96px;top:330px;width:900px;height:184px"><span class="idx">UU ITE · PASAL 15–16</span><p>Electronic system operators must run their systems <mark>reliably and securely</mark>, and are responsible for them.</p></div>
+  <div class="box" style="left:96px;top:534px;width:900px;height:184px"><span class="idx">UU PDP 27/2022 · PASAL 35, 39, 47</span><p>The data controller must secure personal data, prevent unauthorized access, and is <mark>accountable</mark>.</p></div>
+  <div class="abs hd" data-step="1" style="left:96px;top:768px;width:900px;font-size:42px;line-height:1.18;font-stretch:110%">A documented repeat report turns <span style="color:var(--muted);text-decoration:line-through;text-decoration-thickness:4px;text-decoration-color:var(--red)">“we didn’t know”</span> into <mark>“you were told.”</mark></div>
+  <div class="abs" data-step="2" style="left:1056px;top:282px;width:768px;background:#fff;border:2px solid var(--blue);padding:32px 36px 34px">
+    <span class="idx">POLICY IDEA</span>
+    <div class="hd" style="font-size:40px;font-stretch:110%;line-height:1.12">Institutions mandate Chrome Enhanced Safe Browsing</div>
+    <div class="mono" style="margin-top:22px;background:var(--ink);color:#fff;font-size:28px;padding:16px 22px">SafeBrowsingProtectionLevel = 2</div>
+    <div style="display:flex;align-items:flex-end;gap:24px;margin-top:28px">
+      <div class="hd" style="font-size:116px;font-stretch:100%;color:var(--blue);line-height:.9;white-space:nowrap">20–35%</div>
+      <p style="margin:0;font-size:27px;line-height:1.3">less phishing for Enhanced users, per Google</p>
+    </div>
+    <p class="mono" style="margin:12px 0 0;font-size:15px;line-height:1.4;color:var(--muted);word-break:break-all">security.googleblog.com/2022/12/enhanced-protection-strongest-level-of.html</p>
+    <div style="border-top:1px solid var(--rule);margin-top:26px;padding-top:22px;font-size:27px;line-height:1.35"><b style="font-weight:500">Privacy:</b> more browsing data goes to Google, so a <mark>privacy notice</mark> is needed under UU PDP.</div>
+  </div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Ferisca">This is the law angle, which is our group's role. Our point is the provider's duty of care. Under UU ITE Articles 15 and 16, electronic system operators must run their systems reliably and securely, and they are responsible for them. Under UU PDP, Law 27 of 2022, Articles 35, 39 and 47, the data controller must secure personal data, prevent unauthorized access, and is accountable. So a documented repeat report changes the story from "we didn't know" to "you were told". We also have a policy idea: institutions can require Chrome Enhanced Safe Browsing through the policy SafeBrowsingProtectionLevel equals 2. Google says Enhanced Protection users are phished 20 to 35 percent less. But more browsing data goes to Google, so under UU PDP the institution needs a privacy notice. Source: https://security.googleblog.com/2022/12/enhanced-protection-strongest-level-of.html</aside>
+</section>
+
+<!-- 8 NUMBERS -->
+<section class="slide" data-layer="4" data-max="0">
+  <h2>Numbers: more tests, <mark>consistent</mark> scores.</h2>
+  <div class="abs" style="left:96px;top:300px;width:460px">
+    <div class="hd" style="font-size:280px;font-stretch:100%;color:var(--blue);line-height:.82">57</div>
+    <p style="margin:24px 0 0;font-size:32px;line-height:1.25">automated tests <mark>passing</mark></p>
+    <p class="mono" style="margin:18px 0 0;font-size:24px;color:var(--muted)">was <span style="text-decoration:line-through">41</span> last week</p>
+  </div>
+  <div class="abs" style="left:640px;top:300px;width:1184px">
+    <table class="t">
+      <tr><th style="width:430px">SAMPLE</th><th>SCORE</th><th style="width:300px">VERDICT</th></tr>
+      <tr><td>Package SMS</td><td><span class="bar"><i class="r" style="width:74%"></i></span><span class="sv">74</span></td><td class="vd r">Likely scam</td></tr>
+      <tr><td>Fake bank OTP</td><td><span class="bar"><i class="r" style="width:100%"></i></span><span class="sv">100</span></td><td class="vd r">Likely scam</td></tr>
+      <tr><td>Everyday note</td><td><span class="bar"><i style="width:0"></i></span><span class="sv">0</span></td><td class="vd b">Looks safe</td></tr>
+      <tr><td>Prize SMS</td><td><span class="bar"><i class="r" style="width:52%"></i></span><span class="sv">52</span></td><td class="vd">Suspicious</td></tr>
+      <tr><td>Fake bank email</td><td><span class="bar"><i class="r" style="width:100%"></i></span><span class="sv">100</span></td><td class="vd r">Likely scam</td></tr>
+      <tr><td>Fake prize email</td><td><span class="bar"><i class="r" style="width:52%"></i></span><span class="sv">52</span></td><td class="vd">Suspicious</td></tr>
+      <tr class="hl"><td>Same sender, 2nd text<br><span class="mono" style="font-size:17px;color:var(--muted)">WITH SAVED SENDER</span></td><td><span class="bar"><i class="r" style="width:100%"></i></span><span class="sv">74 → 100</span></td><td><div class="stamp s-sm inl" style="--r:-4deg;font-size:18px">REPEAT</div></td></tr>
+    </table>
+  </div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Ferisca">Now the numbers. We have 57 automated tests passing, up from 41. Here are sample scores. The package SMS scores 74, likely scam. The fake bank OTP and the fake bank email both score 100. An everyday note scores 0, looks safe. The prize SMS and the fake prize email score 52, suspicious. And the same sender's second text goes from 74 to 100 once the sender is saved.</aside>
+</section>
+
+<!-- 9 NEXT -->
+<section class="slide dark" data-layer="all" data-max="1">
+  <h2>Next: AI scoring, real samples, <mark>final demo</mark>.</h2>
+  <div class="abs" style="left:96px;top:360px;width:1728px;height:420px">
+    <div style="position:absolute;left:0;right:560px;top:92px;height:2px;background:#5A606B"></div>
+    <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1.25fr 1fr;column-gap:48px">
+      <div><div class="mono" style="font-size:24px;color:#9aa0ab;letter-spacing:.06em;height:60px">WEEK 12 · NOW</div><div style="width:24px;height:24px;border-radius:50%;background:#9aa0ab;margin-top:20px"></div><p style="margin:24px 0 0;font-size:32px;line-height:1.3;color:#c9ced6">MVP v2 plus the Layer 2 lab: DNS filter and firewall proof.</p></div>
+      <div><div class="mono" style="font-size:24px;color:var(--hi);letter-spacing:.06em;height:60px">WEEK 13</div><div style="width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid var(--hi);margin-top:20px"></div><p style="margin:24px 0 0;font-size:32px;line-height:1.3">AI scam-message scoring, tested on <mark>real (redacted)</mark> scam samples.</p><p style="margin:14px 0 0;font-size:32px;line-height:1.3">Collect a real example scam email, as Sir asked.</p></div>
+      <div><div class="mono" style="font-size:24px;color:var(--hi);letter-spacing:.06em;height:60px">SESSIONS 14–15</div><div class="stamp ok s-md inl" style="margin-top:8px;--r:-3deg;background:var(--paper)">FINAL DEMO</div></div>
+    </div>
+  </div>
+  <div class="abs hd" data-step="1" style="left:96px;top:830px;width:1500px;font-size:60px;font-stretch:112%">Thank you, Sir. <mark>Questions &amp; feedback?</mark></div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Ferisca">This week we also finished the Layer 2 lab. Next steps. In week 13 we add AI scam-message scoring and test it on real scam samples, with personal details redacted. As you asked, Sir, we will also collect a real example scam email. Then we show the full demo in sessions 14 and 15. Thank you, Sir. We are happy to take your questions and feedback.</aside>
+</section>
+
+</div>
+<div id="notes"><div class="who"></div><div class="txt"></div></div>
+<div id="hint">← → / space · F fullscreen · N notes</div>
+
+<script>
+(function(){
+const Q=new URLSearchParams(location.search);
+const FINAL=Q.has('final'), STATIC=Q.has('static')||matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(Q.has('static')) document.getElementById('hint').style.display='none';
+const stage=document.getElementById('stage');
+const slides=[...document.querySelectorAll('.slide')];
+const N=slides.length;
+const LABS=['L1<br>LAWS','L2<br>NETWORK','L3<br>ACCOUNTS','L4<br>ASSIST'];
+
+function scale(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform=`translate(-50%,-50%) scale(${s})`;stage._s=s;}
+addEventListener('resize',scale);scale();
+
+// numbering + layer strip
+slides.forEach((sl,i)=>{
+  sl.querySelector('.num').textContent=String(i+1).padStart(2,'0')+' / '+String(N).padStart(2,'0');
+  const L=sl.dataset.layer; if(L===undefined) return;
+  const all=L==='all', act=+L;
+  const st=document.createElement('div'); st.className='strip';
+  st.innerHTML=LABS.map((t,k)=>`<div class="seg${all||act===k+1?' on':''}"><div class="fill"></div><span>${t}</span></div>`).join('');
+  sl.appendChild(st);
+});
+
+// navigation
+let cur=0, step=0;
+function stepsOf(sl){return [...sl.querySelectorAll('[data-step]')];}
+function applySteps(sl,anim){
+  stepsOf(sl).forEach(el=>{
+    const show=+el.dataset.step<=step, was=!el.classList.contains('step-h');
+    el.classList.toggle('step-h',!show);
+    if(show&&!was&&anim&&!STATIC){
+      if(el.classList.contains('stamp')) stampIn(el); else el.animate([{opacity:0,transform:(el.style.transform||'')+' translateY(12px)'},{opacity:1,transform:el.style.transform||'none'}],{duration:280,easing:'cubic-bezier(.2,.7,.2,1)'});
+      el.querySelectorAll('.stamp').forEach(stampIn);
+    }
+  });
+}
+function stampIn(el){
+  if(STATIC) return; const r=getComputedStyle(el).getPropertyValue('--r')||'-4deg';
+  el.animate([{transform:`rotate(${r}) scale(1.6)`,opacity:0,filter:'blur(1px)'},{transform:`rotate(${r}) scale(1)`,opacity:.93,filter:'blur(1px)',offset:.5},{transform:`rotate(${r}) scale(1)`,opacity:.93,filter:'blur(0)'}],{duration:360,easing:'cubic-bezier(.2,.7,.2,1)'});
+}
+function enterAnim(sl){
+  if(STATIC) return;
+  sl.querySelectorAll('.seg.on .fill').forEach((f,k)=>f.animate([{transform:'scaleX(0)'},{transform:'scaleX(1)'}],{duration:400,easing:'cubic-bezier(.2,.7,.2,1)',fill:'backwards',delay:120+k*60}));
+  sl.querySelectorAll('.stamp:not([data-step])').forEach(s=>{if(!s.closest('[data-step]')) stampIn(s);});
+}
+function show(i,st,dir){
+  i=Math.max(0,Math.min(N-1,i));
+  const prev=slides[cur], next=slides[i];
+  if(prev!==next){
+    if(!STATIC&&dir){
+      const a=prev.animate([{transform:'translateX(0)',opacity:1},{transform:`translateX(${-80*dir}px)`,opacity:0}],{duration:280,easing:'cubic-bezier(.2,.7,.2,1)'});
+      a.onfinish=()=>prev.classList.remove('on');
+      next.animate([{transform:`translateX(${80*dir}px)`,opacity:0},{transform:'translateX(0)',opacity:1}],{duration:280,easing:'cubic-bezier(.2,.7,.2,1)'});
+    } else prev.classList.remove('on');
+  }
+  next.classList.add('on'); cur=i; step=st;
+  applySteps(next,false);
+  if(prev!==next||!dir) enterAnim(next);
+  history.replaceState(null,'','#'+(i+1));
+  notes();
+}
+function nextStep(){const m=+slides[cur].dataset.max||0; if(step<m){step++;applySteps(slides[cur],true);} else if(cur<N-1) show(cur+1,0,1);}
+function prevStep(){if(cur>0) show(cur-1,+slides[cur-1].dataset.max||0,-1);}
+function notes(){const a=slides[cur].querySelector('aside.notes');const p=document.getElementById('notes');p.querySelector('.who').textContent='SLIDE '+(cur+1)+' · SPEAKER: '+(a?a.dataset.who:'').toUpperCase();p.querySelector('.txt').textContent=a?a.textContent:'';}
+addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' ','PageDown','Enter'].includes(e.key)){e.preventDefault();nextStep();}
+  else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();prevStep();}
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
+  else if(e.key==='n'||e.key==='N'){document.getElementById('notes').classList.toggle('show');}
+  else if(e.key==='Home') show(0,0,-1); else if(e.key==='End') show(N-1,0,1);
+});
+stage.addEventListener('click',nextStep);
+slides.forEach(s=>stepsOf(s).forEach(el=>el.classList.add('step-h')));
+let start=(+(Q.get('s')||location.hash.slice(1))||1)-1;
+cur=Math.max(0,Math.min(N-1,start));
+show(cur,FINAL?(+slides[cur].dataset.max||0):0,0);
+Promise.all([document.fonts.ready,...[...document.images].map(im=>im.complete?1:new Promise(r=>{im.onload=im.onerror=r;}))]).then(()=>{document.body.dataset.ready='1';});
+})();
+</script>
+</body>
+</html>

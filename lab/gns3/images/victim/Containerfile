@@ -1,0 +1,6 @@
+# RTS GNS3 lab - victim (klien korban). Build: sudo podman build -t localhost/rts-victim:latest images/victim
+FROM docker.io/nicolaka/netshoot:latest
+COPY start.sh /lab/start.sh
+RUN chmod +x /lab/start.sh
+ENTRYPOINT []
+CMD ["/lab/start.sh"]

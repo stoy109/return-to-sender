@@ -1,0 +1,6 @@
+# RTS GNS3 lab - gw: router + firewall iptables. eth0 = LAN 10.10.1.1, eth1 = DMZ 10.10.2.1
+FROM docker.io/nicolaka/netshoot:latest
+COPY start.sh fw-set-filter.sh /lab/
+RUN chmod +x /lab/*.sh
+ENTRYPOINT []
+CMD ["/lab/start.sh"]

@@ -1,0 +1,85 @@
+# Return to Sender — Layer 2 lab (DNS filter + iptables firewall)
+# NetSec final project, Group 2 (Casey, Alfa, Ferisca)
+# Deploy (Fedora, rootful Podman):
+#   sudo containerlab deploy --runtime podman -t rts-lab.clab.yml
+name: rts-lab
+
+mgmt:
+  network: rts-mgmt
+  ipv4-subnet: 172.31.99.0/24
+  ipv6-subnet: 3fff:172:31:99::/64
+
+topology:
+  defaults:
+    kind: linux
+    restart-policy: "no"
+
+  nodes:
+    victim:
+      kind: linux
+      image: docker.io/nicolaka/netshoot:latest
+      cmd: sleep infinity
+      dns:
+        servers:
+          - 10.10.1.53
+      binds:
+        - ./scripts:/lab/scripts:ro,z
+      exec:
+        - sh /lab/scripts/victim-init.sh
+      stages:
+        configure:
+          wait-for:
+            - node: gw
+              stage: create-links
+            - node: dns
+              stage: configure
+
+    gw:
+      kind: linux
+      image: docker.io/nicolaka/netshoot:latest
+      cmd: sleep infinity
+      sysctls:
+        net.ipv4.ip_forward: 1
+      binds:
+        - ./scripts:/lab/scripts:ro,z
+        - ./captures:/lab/captures:z
+      exec:
+        - sh /lab/scripts/gw-init.sh
+
+    dns:
+      kind: linux
+      image: localhost/rts-dns:latest
+      image-pull-policy: Never
+      cmd: sleep infinity
+      binds:
+        - ./scripts:/lab/scripts:ro,z
+        - ./config/dns/dnsmasq.conf:/etc/dnsmasq.conf:ro,z
+      exec:
+        - sh /lab/scripts/dns-init.sh
+      stages:
+        configure:
+          wait-for:
+            - node: gw
+              stage: create-links
+
+    phish:
+      kind: linux
+      image: docker.io/library/nginx:alpine
+      binds:
+        - ./scripts:/lab/scripts:ro,z
+        - ./config/phish/html:/usr/share/nginx/html:ro,z
+        - ./config/phish/default.conf:/etc/nginx/conf.d/default.conf:ro,z
+      exec:
+        - sh /lab/scripts/phish-init.sh
+      stages:
+        configure:
+          wait-for:
+            - node: gw
+              stage: create-links
+
+  links:
+    # LAN 10.10.1.0/24 — gw bridges eth1+eth2 into br-lan
+    - endpoints: ["victim:eth1", "gw:eth1"]
+    - endpoints: ["dns:eth1", "gw:eth2"]
+    # DMZ 10.10.2.0/24
+    - endpoints: ["phish:eth1", "gw:eth3"]
