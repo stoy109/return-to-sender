@@ -16,12 +16,17 @@ The same lab as [`../containerlab`](../containerlab), drawn on a GNS3 canvas so 
 
 ## Status
 
+**Verified end-to-end on 23 November 2026, about 14:56 WIB**, on a Fedora laptop with GNS3 2.2.61 and Podman 6.1.3 via `docker.sock`. All five nodes started (green): victim, sw-lan (Linux bridge `br0`), dns, gw and phish. `./scripts/demo.sh` matched the Containerlab results: filter OFF returned `NOERROR` / `A 10.10.2.66` and `HTTP/1.1 200 OK` from nginx/1.31.8 (DEMO page); filter ON returned NXDOMAIN, `curl` by name failed (`Could not resolve host`), `curl` to `10.10.2.66` timed out after 5003 ms, and the gateway had `-A FORWARD -d 10.10.2.66/32 -j DROP`. A screenshot of the running topology is [`topology-running.png`](topology-running.png). Full notes are in [`../../docs/lab-results.md`](../../docs/lab-results.md).
+
 GNS3 2.2 expects the Docker API. This project uses rootful Podman's Docker-compatible socket with two workarounds:
 
 1. Rootful Podman is set to `netns = "none"` and `no_hosts = true`, so GNS3/uBridge can attach the interfaces itself (see [GNS3/gns3-server#1811](https://github.com/GNS3/gns3-server/issues/1811)). This applies to **all** rootful containers; turn it off with `sudo ./host/gns3-mode.sh off`.
 2. Podman has no `attach/ws` endpoint, so the GNS3 telnet console does not work. Every node uses console type *none*; open a shell with `./scripts/shell.sh <node>`.
 
-The project loads in GNS3 2.2.61. It has **not yet been verified end-to-end on Podman**.
+### Gotchas
+
+- The GNS3 GUI must be started with `docker` group membership. Adding the user to the group is not enough if GNS3 was opened from a desktop session that began before the group change: `./host/check-setup.sh` can pass in a new terminal while GNS3 still cannot open `docker.sock`. Use a fresh graphical login, or start GNS3 from a terminal with `pkill -f gns3; sg docker -c gns3`.
+- Node consoles are type *none* (see workaround 2). Double-clicking a node does nothing; use `./scripts/shell.sh <node>`.
 
 ## Run
 

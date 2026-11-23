@@ -27,7 +27,7 @@ GNS3 2.2 cuma bisa ngobrol sama **Docker API** di `/var/run/docker.sock`. Podman
 1. **Podman ngabaikan `NetworkDisabled`.** Akibatnya container dapat `eth0` sendiri, terus uBridge GNS3 gagal mindahin `eth0` karena namanya bentrok (lihat [GNS3/gns3-server#1811](https://github.com/GNS3/gns3-server/issues/1811)). Solusinya: podman **root** di-set `netns = "none"` sama `no_hosts = true`, dan itu udah dikerjain sama script setup.
 2. **Podman nggak punya endpoint `attach/ws`.** Itu yang dipakai console telnet GNS3, jadi semua node di project ini sengaja di-set **console type = none**. Buat masuk shell node pakai `./scripts/shell.sh <node>`, bukan double-click.
 
-Disiapkan untuk Fedora 44 dengan Podman 6.1.3, podman-docker, busybox static, dan ubridge yang sudah punya caps. Project-nya sudah lolos tes load di GNS3 2.2.61, tapi belum diuji end-to-end di Podman.
+Disiapkan untuk Fedora 44 dengan Podman 6.1.3, podman-docker, busybox static, dan ubridge yang sudah punya caps. **Sudah diverifikasi end-to-end pada 23 November 2026, sekitar 14:56 WIB**, di laptop Fedora dengan GNS3 2.2.61 dan Podman 6.1.3 lewat `docker.sock`. Hasil `./scripts/demo.sh` sama dengan lab Containerlab (filter OFF: `200 OK`; filter ON: NXDOMAIN plus DROP). Screenshot topologi yang sedang jalan: [`topology-running.png`](topology-running.png).
 
 ---
 
@@ -172,7 +172,7 @@ Console aux GNS3 jalan pakai `docker exec`. Kalau mau dicoba: `sudo dnf install 
 
 | Gejala | Penyebab / solusi |
 |---|---|
-| `Can't connect to Docker daemon` | Socket belum bisa diakses. Jalanin `./host/check-setup.sh`, terus pastiin udah logout/login dan GNS3 udah di-restart. Cek `ls -lL /var/run/docker.sock`, grup-nya harus `docker`. |
+| `Can't connect to Docker daemon` | Socket belum bisa diakses, atau GNS3 dibuka tanpa keanggotaan grup `docker`. Jalanin `./host/check-setup.sh`. Kalau check-nya sudah `[OK]` tapi GNS3 tetap error, sesi desktop-nya masih yang lama (sebelum masuk grup). Logout/login grafis, atau dari terminal: `pkill -f gns3; sg docker -c gns3`. Cek `ls -lL /var/run/docker.sock`, grup-nya harus `docker`. |
 | `No busybox executable could be found` / *dynamically linked* | `sudo dnf install busybox`, cek `ldd (which busybox)` harus *not a dynamic executable*. Kalau ternyata dynamic, cari build busybox static. |
 | Node gagal start, error soal namespace / `eth0` / `File exists` | Mode `netns=none` belum aktif: `sudo ./host/gns3-mode.sh on`, terus Stop/Start node. Cek lagi pakai `check-setup.sh`. |
 | `uBridge requires root access or the capability...` | `sudo setcap cap_net_admin,cap_net_raw=ep /usr/bin/ubridge` |

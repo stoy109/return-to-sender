@@ -26,7 +26,7 @@ app/                 L4 Stop-Check-Report assistant (Vite + TypeScript + Preact,
 lab/containerlab/    L2 lab: victim, gateway/firewall, DNS filter, fake phishing server (Containerlab + Podman)
 lab/gns3/            The same L2 lab as a GNS3 project (Docker nodes via Podman's Docker-compatible API)
 slides/week12/       Week 12 progress deck (single HTML file) and speaker script
-docs/                Architecture, the four layers, and the 16 Nov 2026 lab results
+docs/                Architecture, the four layers, and the 16 Nov / 23 Nov 2026 lab results
 ```
 
 ## Quickstart
@@ -72,7 +72,7 @@ sudo ./host/setup-podman-for-gns3.sh   # then log out and back in
 ./host/check-setup.sh
 ```
 
-Then in GNS3: **File → Import portable project** → `lab/gns3/project/rts-gns3.gns3project`, press ▶, and run `./scripts/demo.sh`. Details: [`lab/gns3/README.md`](lab/gns3/README.md).
+Then in GNS3: **File → Import portable project** → `lab/gns3/project/rts-gns3.gns3project`, press ▶, and run `./scripts/demo.sh`. The GNS3 GUI must be started with `docker` group membership (fresh login, or `sg docker -c gns3`). Verified end-to-end on 23 November 2026. Details: [`lab/gns3/README.md`](lab/gns3/README.md).
 
 ### Slides
 
