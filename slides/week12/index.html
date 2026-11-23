@@ -107,6 +107,22 @@ table.t{border-collapse:collapse;width:100%;font-size:26px}
 .trace .ok{color:#d5dcf7}
 .trace .note{padding:16px 22px 20px;font:500 16px/1.4 'IBM Plex Mono',monospace;color:#9aa0ab;border-top:1px solid #3a3f48}
 
+/* week 12 update: narrow compare boxes, capture brackets, real cases */
+.cmp.nar .row{grid-template-columns:168px 1fr}
+.brk{position:absolute;left:0;right:0;border:2.5px solid var(--blue);pointer-events:none}
+.brk.off{border-color:var(--red)}
+.brk b{position:absolute;right:-3px;top:-3px;background:var(--blue);color:#fff;font:500 15px 'IBM Plex Mono',monospace;letter-spacing:.06em;padding:5px 10px}
+.brk.off b{background:var(--red)}
+.sc.rc{padding:28px 36px 30px}
+.sc.rc .sc-top{margin-bottom:20px;padding-bottom:16px;font-size:20px}
+.sc.rc .rows{margin-top:18px}
+.sc.rc .row{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:10px 0;border-top:1px solid var(--rule)}
+.sc.rc .row:first-child{border-top:2px solid var(--ink)}
+.sc.rc .k{font:500 16px/1.35 'IBM Plex Mono',monospace;color:var(--blue);letter-spacing:.05em;padding-top:4px}
+.sc.rc .v{font-size:23px;line-height:1.3}
+.sc.rc .q{margin:16px 0 0;font-size:22px;line-height:1.35;font-style:italic;color:var(--ink);border-left:4px solid var(--blue);padding-left:16px}
+.sc.rc .src{position:absolute;left:36px;bottom:24px;font:500 16px 'IBM Plex Mono',monospace;color:var(--muted);letter-spacing:.06em}
+
 /* notes panel */
 #notes{position:fixed;left:0;right:0;bottom:0;max-height:38vh;overflow:auto;background:#fff;color:var(--ink);border-top:3px solid var(--blue);font:400 17px/1.5 'IBM Plex Sans',sans-serif;padding:16px 28px 22px;display:none;z-index:50}
 #notes.show{display:block}
@@ -193,69 +209,55 @@ aside.notes{display:none}
 </section>
 
 
-<!-- 5 LAYER 2 PROOF -->
+<!-- 5 LAYER 2 PROOF (GNS3) -->
 <section class="slide" data-layer="2" data-max="0">
   <h2>Layer 2 proof: block it <mark>before</mark> the click.</h2>
-  <div class="abs mono" style="left:96px;top:260px;font-size:20px;color:var(--muted);letter-spacing:.06em">CONTAINERLAB · FEDORA / PODMAN · 16 NOV 2026 · ~15:30 WIB · LAB ONLY</div>
-  <div class="abs" style="left:96px;top:308px;width:1728px;display:grid;grid-template-columns:1fr 40px 1fr 40px 1fr 40px 1fr;align-items:stretch">
-    <div class="nd"><div class="role">CLIENT</div><div class="nm">victim</div><div class="ip">10.10.1.10</div><div class="ds">LAN host</div></div>
-    <div class="arr">→</div>
-    <div class="nd"><div class="role">DNS FILTER</div><div class="nm">dns</div><div class="ip">10.10.1.53</div><div class="ds">dnsmasq</div></div>
-    <div class="arr">→</div>
-    <div class="nd"><div class="role">ROUTER + FIREWALL</div><div class="nm">gw</div><div class="ip">10.10.1.1 / 10.10.2.1</div><div class="ds">iptables FORWARD</div></div>
-    <div class="arr">→</div>
-    <div class="nd"><div class="role">FAKE JNE PAGE</div><div class="nm">phish</div><div class="ip">10.10.2.66</div><div class="ds">Static DEMO, no form</div></div>
-  </div>
-  <div class="abs mono" style="left:96px;top:478px;font-size:20px;color:var(--muted);letter-spacing:.04em">DOMAIN · <span style="color:var(--ink)">jne-paket-tertunda.example</span> &nbsp;·&nbsp; reserved TLD, not a real site</div>
-  <div class="cmp abs" style="left:96px;top:524px;width:840px;height:460px">
+  <div class="abs mono" style="left:96px;top:260px;font-size:20px;color:var(--muted);letter-spacing:.06em">GNS3 2.2.61 · DOCKER NODES ON PODMAN · FEDORA · VERIFIED 23 NOV 2026 · ~14:56 WIB · LAB ONLY</div>
+  <div class="shot" style="left:96px;top:308px;width:1000px"><img src="img/gns3-topology.png" alt="GNS3 canvas: victim and dns on sw-lan (Linux bridge br0), gw with iptables, phish nginx DEMO in the DMZ"></div>
+  <div class="cap" style="left:96px;top:958px;width:1000px">GNS3 CANVAS · VICTIM + DNS → SW-LAN (BR0) → GW → PHISH · ALL 5 NODES STARTED</div>
+  <div class="abs" style="left:96px;top:992px;width:1000px;font-size:20px;line-height:1.3;color:var(--muted)">First prototype: Containerlab, 16 Nov 2026 — same result.</div>
+  <div class="cmp nar abs" style="left:1144px;top:308px;width:680px;height:240px">
     <span class="idx">FILTER OFF</span>
     <div class="hd" style="font-size:40px;font-stretch:110%;line-height:1.1;margin-top:4px;padding-right:200px">The page opens.</div>
     <div class="stamp s-md" style="right:28px;top:28px;--r:-6deg">REACHED</div>
     <div class="rows">
       <div class="row"><div class="k">DNS</div><div class="v">A record <span class="mono" style="font-size:22px">10.10.2.66</span></div></div>
-      <div class="row"><div class="k">GET /</div><div class="v"><span class="mono" style="font-size:22px">HTTP/1.1 200 OK</span></div></div>
-      <div class="row"><div class="k">WIRESHARK</div><div class="v">Packets 6–38: DNS A, then the page</div></div>
+      <div class="row"><div class="k">CURL BY NAME</div><div class="v"><span class="mono" style="font-size:22px">HTTP/1.1 200 OK</span> · DEMO</div></div>
     </div>
   </div>
-  <div class="cmp on abs" style="left:984px;top:524px;width:840px;height:460px">
+  <div class="cmp nar on abs" style="left:1144px;top:572px;width:680px;height:366px">
     <span class="idx">FILTER ON</span>
-    <div class="hd" style="font-size:40px;font-stretch:110%;line-height:1.1;margin-top:4px;padding-right:200px">Blocked before the click.</div>
+    <div class="hd" style="font-size:40px;font-stretch:110%;line-height:1.1;margin-top:4px;padding-right:200px">Never reached.</div>
     <div class="stamp ok s-md" style="right:28px;top:28px;--r:5deg">BLOCKED</div>
     <div class="rows">
-      <div class="row"><div class="k">DNS</div><div class="v">NXDOMAIN — “No such name”</div></div>
+      <div class="row"><div class="k">DNS</div><div class="v">NXDOMAIN</div></div>
       <div class="row"><div class="k">CURL BY NAME</div><div class="v">Could not resolve host</div></div>
-      <div class="row"><div class="k">CURL TO IP</div><div class="v">Times out after 5000 ms</div></div>
-      <div class="row"><div class="k">FIREWALL</div><div class="v"><span class="mono" style="font-size:18px;word-break:break-word">iptables -A FORWARD -d 10.10.2.66/32 -j DROP</span></div></div>
-      <div class="row"><div class="k">WIRESHARK</div><div class="v">Packets 39–57: NXDOMAIN, then SYN retransmissions only</div></div>
+      <div class="row"><div class="k">CURL TO IP</div><div class="v">Timed out after 5003 ms</div></div>
+      <div class="row"><div class="k">FIREWALL (GW)</div><div class="v"><span class="mono" style="font-size:18px">iptables -A FORWARD<br>-d 10.10.2.66/32 -j DROP</span></div></div>
     </div>
   </div>
   <div class="num"></div>
-  <aside class="notes" data-who="Alfa">This is Layer 2, the network layer. On 16 November we ran a Containerlab lab on Fedora with Podman. Four nodes: a victim PC, a gateway firewall, a DNS filter, and a static fake JNE DEMO page — no forms, no credentials. The demo domain is jne-paket-tertunda.example. With the filter off, DNS returns 10.10.2.66 and the page opens with HTTP 200. With the filter on, DNS answers NXDOMAIN, curl by name cannot resolve the host, and curl to the IP times out after five seconds, because the gateway drops traffic to 10.10.2.66.</aside>
+  <aside class="notes" data-who="Alfa">This is Layer 2, the network layer. On 23 November we verified it in GNS3 on Fedora, with the Docker nodes running on Podman. On the canvas you see the victim, a Linux bridge switch, a dnsmasq DNS filter, the gateway with iptables, and a static fake JNE page marked DEMO — no forms, no credentials. The demo domain is jne-paket-tertunda.example. With the filter off, DNS returns 10.10.2.66 and the page opens with HTTP 200. With the filter on, DNS answers NXDOMAIN, and because the gateway drops traffic to 10.10.2.66, curl to the IP times out after five seconds. Our first prototype, in Containerlab on 16 November, gave the same result.</aside>
 </section>
 
-<!-- 6 CAPTURE SUMMARY -->
+<!-- 6 CAPTURES (GNS3) -->
 <section class="slide" data-layer="2" data-max="0">
-  <h2>What the 16 Nov capture <mark>shows</mark>.</h2>
-  <div class="abs mono" style="left:96px;top:196px;width:1288px;font-size:20px;color:var(--muted);letter-spacing:.06em">STYLIZED SUMMARY OF THE 16 NOV 2026 CAPTURE · ~15:30 WIB · NOT A RAW PCAP EXPORT</div>
-  <div class="trace abs" style="left:96px;top:260px;width:840px;height:500px">
-    <div class="tbar"><span>FILTER OFF</span><span>PACKETS 6–38</span></div>
-    <div class="th"><span>PROTO</span><span>INFO</span></div>
-    <div class="tr"><span class="ok">DNS</span><span>jne-paket-tertunda.example  A  10.10.2.66</span></div>
-    <div class="tr"><span class="warn">HTTP</span><span>GET /</span></div>
-    <div class="tr"><span class="warn">HTTP</span><span>HTTP/1.1 200 OK</span></div>
-    <div class="note">The victim resolves the name and the DEMO page is returned.</div>
+  <h2>What the 23 Nov capture <mark>shows</mark>.</h2>
+  <div class="abs mono" style="left:96px;top:196px;width:1728px;font-size:20px;color:var(--muted);letter-spacing:.06em">WIRESHARK ON TWO GNS3 LINKS · ~15:00 WIB · FILTER: dns || http || tcp.flags.syn==1 · MACS MASKED</div>
+  <div class="shot" style="left:96px;top:260px;width:1060px"><img src="img/gns3-capture-victim-sw.png" alt="Wireshark on the victim to sw-lan link: DNS A answer and HTTP 200 OK, then No such name and unanswered SYN retransmissions to 10.10.2.66">
+    <div class="brk off" style="top:119px;height:255px"><b>FILTER OFF</b></div>
+    <div class="brk" style="top:377px;height:252px"><b>FILTER ON</b></div>
   </div>
-  <div class="trace abs" style="left:984px;top:260px;width:840px;height:500px">
-    <div class="tbar"><span>FILTER ON</span><span>PACKETS 39–57</span></div>
-    <div class="th"><span>PROTO</span><span>INFO</span></div>
-    <div class="tr"><span class="hit">DNS</span><span>No such name  (NXDOMAIN)</span></div>
-    <div class="tr"><span class="ok">TCP</span><span>SYN → 10.10.2.66</span></div>
-    <div class="tr"><span class="ok">TCP</span><span>SYN retransmissions only · no handshake</span></div>
-    <div class="note">The name never resolves. Direct-IP SYNs are dropped at gw, so the handshake never completes.</div>
+  <div class="cap" style="left:96px;top:916px">LINK VICTIM ↔ SW-LAN</div>
+  <div class="abs" style="left:96px;top:948px;width:1060px;font-size:24px;line-height:1.3"><b style="font-weight:500">Off:</b> DNS A answer, then <span class="mono" style="font-size:21px">HTTP/1.1 200 OK</span>. <b style="font-weight:500">On:</b> “No such name” (NXDOMAIN), then SYN retransmissions to 10.10.2.66, never answered.</div>
+  <div class="shot" style="left:1204px;top:260px;width:620px"><img src="img/gns3-capture-gw-phish.png" alt="Wireshark on the gw to phish link: the HTTP session with GET / and HTTP/1.1 200 OK">
+    <div class="brk off" style="top:14px;height:134px"><b>FILTER OFF</b></div>
   </div>
-  <div class="abs" style="left:96px;top:792px;width:1500px;font-size:26px;line-height:1.35">Lab only. A real deployment would be an ISP or campus DNS filter plus a <mark>TrustPositif-style</mark> blocklist. No credentials are collected.</div>
+  <div class="cap" style="left:1204px;top:524px">LINK GW ↔ PHISH</div>
+  <div class="abs" style="left:1204px;top:556px;width:620px;font-size:24px;line-height:1.3"><b style="font-weight:500">Off:</b> the HTTP session reaches phish (<span class="mono" style="font-size:21px">GET /</span>, <span class="mono" style="font-size:21px">200 OK</span>). <b style="font-weight:500">On:</b> <mark>no victim traffic arrives</mark> — the DROP rule works.</div>
+  <div class="box" style="left:1204px;top:740px;width:620px;padding:22px 28px"><span class="idx">LAB ONLY</span><p style="font-size:23px">Real deployment: ISP or campus DNS filter plus a <mark>TrustPositif-style</mark> blocklist. No credentials collected.</p></div>
   <div class="num"></div>
-  <aside class="notes" data-who="Alfa">Here is a summary of that capture, not a raw pcap export. Packets 6 to 38, filter off: DNS answers with the A record, then GET slash, then HTTP 1.1 200 OK. Packets 39 to 57, filter on: DNS says no such name, and we only see SYN retransmissions to the IP — the handshake never completes. So the phishing page is blocked before the click. This is a lab only. A real deployment would be an ISP or campus DNS filter, plus a TrustPositif-style blocklist.</aside>
+  <aside class="notes" data-who="Alfa">These are the real Wireshark captures from that run, with the MAC addresses masked. On the left is the link between the victim and the switch. Filter off: the DNS A answer, then HTTP 1.1 200 OK. Filter on: DNS says no such name, and all that is left are SYN retransmissions to 10.10.2.66 that nobody answers. On the right is the link between the gateway and the phishing server. With the filter off, the HTTP session reaches it. With the filter on, nothing from the victim arrives — the DROP rule works. This is a lab only; a real deployment would be an ISP or campus DNS filter with a TrustPositif-style blocklist.</aside>
 </section>
 
 <!-- 7 LAW ANGLE -->
@@ -304,20 +306,57 @@ aside.notes{display:none}
   <aside class="notes" data-who="Ferisca">Now the numbers. We have 57 automated tests passing, up from 41. Here are sample scores. The package SMS scores 74, likely scam. The fake bank OTP and the fake bank email both score 100. An everyday note scores 0, looks safe. The prize SMS and the fake prize email score 52, suspicious. And the same sender's second text goes from 74 to 100 once the sender is saved.</aside>
 </section>
 
-<!-- 9 NEXT -->
+<!-- 9 REAL-WORLD CASES -->
+<section class="slide" data-layer="1" data-max="0">
+  <h2>Real-world cases: two <mark>published</mark> lures.</h2>
+  <div class="abs mono" style="left:96px;top:260px;font-size:20px;color:var(--muted);letter-spacing:.06em">PUBLIC SOURCES ONLY · NOT FROM A PERSONAL INBOX · CHECKED 23 NOV 2026</div>
+  <div class="sc rc abs" style="position:absolute;left:96px;top:308px;width:840px;height:560px">
+    <div class="sc-top"><span>CASE 1 · EMAIL · FAKE BCA CUSTOMER SERVICE</span></div>
+    <div class="stamp s-md" style="right:28px;top:84px;--r:-5deg">PHISHING</div>
+    <div class="hd" style="font-size:34px;font-stretch:110%;line-height:1.12;padding-right:190px">“Your card is being misused” — block it here.</div>
+    <div class="rows">
+      <div class="row"><div class="k">THE LINK</div><div class="v">A “sanggahan / blokir kartu” form that looks like BCA.</div></div>
+      <div class="row"><div class="k">IT ASKS</div><div class="v">Card number, expiry, CVV, then the <mark>SMS OTP</mark>.</div></div>
+      <div class="row"><div class="k">RED FLAG</div><div class="v">Sender is not <span class="mono" style="font-size:19px">@bca.co.id</span> or <span class="mono" style="font-size:19px">@klikbca.com</span>.</div></div>
+    </div>
+    <p class="q">“Customer Service BCA tidak pernah meminta data pribadi kepada nasabah lewat sarana apapun.” — BCA</p>
+    <div class="src">SOURCE · BCA, AWAS MODUS · 23 SEP 2024</div>
+  </div>
+  <div class="sc rc abs" style="position:absolute;left:984px;top:308px;width:840px;height:560px">
+    <div class="sc-top"><span>CASE 2 · iMESSAGE · FAKE J&amp;T COURIER</span></div>
+    <div class="stamp s-md" style="right:28px;top:84px;--r:4deg">PHISHING</div>
+    <div class="hd" style="font-size:34px;font-stretch:110%;line-height:1.12;padding-right:190px">Damaged label, then a small extra charge.</div>
+    <div class="rows">
+      <div class="row"><div class="k">THE CLAIM</div><div class="v">“paket bermasalah, alamatnya rusak, tidak terbaca jelas”</div></div>
+      <div class="row"><div class="k">THE LINK</div><div class="v">Update the address within 24 hours; pay ~Rp 9,000.</div></div>
+      <div class="row"><div class="k">THE TRAP</div><div class="v">Page said “failed”; 5 tries, all charged in SAR.</div></div>
+      <div class="row"><div class="k">LOSS</div><div class="v"><mark>About Rp 70 juta.</mark> The package was never stuck.</div></div>
+    </div>
+    <div class="src">SOURCE · DETIK INET · 4 SEP 2025</div>
+  </div>
+  <div class="abs" style="left:96px;top:900px;width:1500px;font-size:24px;line-height:1.3">Our lab domain <span class="mono" style="font-size:21px">jne-paket-tertunda.example</span> models this courier lure → NXDOMAIN + DROP.</div>
+  <div class="num"></div>
+  <aside class="notes" data-who="Ferisca">Sir, you asked for a real example, so here are two published cases, not from our own inbox. First, an email. On 23 September 2024, BCA warned about a fake Customer Service email saying the customer's credit card is being misused, with a link to block it. The form looks like BCA and asks for the card number, expiry date, CVV, and then the SMS OTP. BCA says its customer service never asks for personal data, through any channel. Second, on 4 September 2025 Detik reported an iMessage saying a J&amp;T package label was damaged: update the address within 24 hours, and pay an extra charge of about 9,000 rupiah. The page kept saying the payment failed. The victim tried five times, and every charge went through in Saudi riyal — about 70 million rupiah lost. The package was never stuck. Our lab domain models exactly this kind of lure.</aside>
+</section>
+
+<!-- 10 NEXT -->
 <section class="slide dark" data-layer="all" data-max="1">
   <h2>Next: AI scoring, real samples, <mark>final demo</mark>.</h2>
-  <div class="abs" style="left:96px;top:360px;width:1728px;height:420px">
+  <div class="abs" style="left:96px;top:320px;width:1728px;height:400px">
     <div style="position:absolute;left:0;right:560px;top:92px;height:2px;background:#5A606B"></div>
     <div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1.25fr 1fr;column-gap:48px">
-      <div><div class="mono" style="font-size:24px;color:#9aa0ab;letter-spacing:.06em;height:60px">WEEK 12 · NOW</div><div style="width:24px;height:24px;border-radius:50%;background:#9aa0ab;margin-top:20px"></div><p style="margin:24px 0 0;font-size:32px;line-height:1.3;color:#c9ced6">MVP v2 plus the Layer 2 lab: DNS filter and firewall proof.</p></div>
-      <div><div class="mono" style="font-size:24px;color:var(--hi);letter-spacing:.06em;height:60px">WEEK 13</div><div style="width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid var(--hi);margin-top:20px"></div><p style="margin:24px 0 0;font-size:32px;line-height:1.3">AI scam-message scoring, tested on <mark>real (redacted)</mark> scam samples.</p><p style="margin:14px 0 0;font-size:32px;line-height:1.3">Collect a real example scam email, as Sir asked.</p></div>
-      <div><div class="mono" style="font-size:24px;color:var(--hi);letter-spacing:.06em;height:60px">SESSIONS 14–15</div><div class="stamp ok s-md inl" style="margin-top:8px;--r:-3deg;background:var(--paper)">FINAL DEMO</div></div>
+      <div><div class="mono" style="font-size:24px;color:#9aa0ab;letter-spacing:.06em;height:60px">WEEK 12 · DONE</div><div style="width:24px;height:24px;border-radius:50%;background:#9aa0ab;margin-top:20px"></div><p style="margin:24px 0 0;font-size:32px;line-height:1.3;color:#c9ced6">MVP v2, the Layer 2 GNS3 lab, and real-world cases collected.</p></div>
+      <div><div class="mono" style="font-size:24px;color:var(--hi);letter-spacing:.06em;height:60px">WEEK 13</div><div style="width:24px;height:24px;border-radius:50%;background:var(--ink);border:3px solid var(--hi);margin-top:20px"></div><p style="margin:24px 0 0;font-size:32px;line-height:1.3">AI scam-message scoring, tested on <mark>real (redacted)</mark> scam samples.</p></div>
+      <div><div class="mono" style="font-size:24px;color:var(--hi);letter-spacing:.06em;height:60px">SESSIONS 14–15</div><div class="stamp ok s-md inl" style="margin-top:8px;--r:-3deg;background:var(--paper)">FULL DEMO</div></div>
     </div>
   </div>
-  <div class="abs hd" data-step="1" style="left:96px;top:830px;width:1500px;font-size:60px;font-stretch:112%">Thank you, Sir. <mark>Questions &amp; feedback?</mark></div>
+  <div class="abs" style="left:96px;top:700px;width:1728px;border-top:1px solid #3a3f48;padding-top:26px;display:flex;align-items:baseline;gap:28px">
+    <span class="mono" style="font-size:22px;color:#9aa0ab;letter-spacing:.06em;white-space:nowrap">LIVE WEB APP · CLOUDFLARE WORKERS</span>
+    <a id="app-url" class="mono" href="https://return-to-sender.r-pinontoan19.workers.dev" style="font-size:30px;color:var(--hi);text-decoration:none;white-space:nowrap">return-to-sender.r-pinontoan19.workers.dev</a>
+  </div>
+  <div class="abs hd" data-step="1" style="left:96px;top:850px;width:1500px;font-size:60px;font-stretch:112%">Thank you, Sir. <mark>Questions &amp; feedback?</mark></div>
   <div class="num"></div>
-  <aside class="notes" data-who="Ferisca">This week we also finished the Layer 2 lab. Next steps. In week 13 we add AI scam-message scoring and test it on real scam samples, with personal details redacted. As you asked, Sir, we will also collect a real example scam email. Then we show the full demo in sessions 14 and 15. Thank you, Sir. We are happy to take your questions and feedback.</aside>
+  <aside class="notes" data-who="Ferisca">So, this week MVP v2 is done, the Layer 2 GNS3 lab is done, and we collected real example cases. The app is also live as a web app on Cloudflare Workers, at return-to-sender.r-pinontoan19.workers.dev. Next, in week 13 we add AI scam-message scoring and test it on real scam samples, with personal details redacted. Then we show the full demo in sessions 14 and 15. Thank you, Sir. We are happy to take your questions and feedback.</aside>
 </section>
 
 </div>
