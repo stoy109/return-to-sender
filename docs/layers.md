@@ -2,7 +2,7 @@
 
 The lecturer's order of priority shaped the design: **laws and identity first**, then the **security layer** (firewall, guard), then **AI and automation**. Inside each layer, solutions were ranked by **biggest impact, easiest, fastest and cheapest**. Each week a new solution was added and logged.
 
-Running scenario: a hijacked Discord friend sends a malicious Minecraft mod (trust-chain phishing), alongside everyday Indonesian scam SMS (fake courier, fake bank OTP, fake prize).
+Running scenario: a hijacked Discord friend sends a malicious Minecraft mod (trust-chain phishing), alongside everyday Indonesian scam SMS (fake courier, fake bank OTP, fake prize). Two published cases — a BCA “transaction cancellation” phishing email (23 September 2024) and a J&T “damaged label / extra charge” iMessage reported by Detik (4 September 2025, about Rp 70 million lost) — are written up in [real-case-examples.md](real-case-examples.md), with a one-page visual at [img/real-case-example.png](img/real-case-example.png).
 
 ## L1 – Laws & habits
 

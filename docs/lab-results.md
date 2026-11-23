@@ -1,6 +1,6 @@
 # L2 lab results
 
-Two runs of the same Layer 2 lab (DNS filter plus gateway firewall) on a Fedora laptop with rootful Podman. The test domain is `jne-paket-tertunda.example`. Filter ON means two controls together:
+Two runs of the same Layer 2 lab (DNS filter plus gateway firewall) on a Fedora laptop with rootful Podman. The test domain is `jne-paket-tertunda.example`. It stands in for the published courier-lure class described in [real-case-examples.md](real-case-examples.md) (Case 2, the J&T iMessage reported by Detik on 4 September 2025). Filter ON means two controls together:
 
 - DNS: dnsmasq returns NXDOMAIN for `jne-paket-tertunda.example`.
 - Firewall on the gateway:

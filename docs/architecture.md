@@ -68,3 +68,7 @@ There is no backend, no network call made by the analyzer, and no telemetry. `An
 ## L2 lab
 
 Both lab versions use the same addressing: LAN `10.10.1.0/24` (victim `.10`, dns `.53`, gateway `.1`) and DMZ `10.10.2.0/24` (gateway `.1`, phish `.66`). The filter is switched by two scripts: one rewrites the dnsmasq rule for `jne-paket-tertunda.example`, the other adds or removes the gateway `FORWARD` drop for `10.10.2.66/32`. See [lab-results.md](lab-results.md).
+
+## Published cases
+
+Two publicly documented Indonesian cases, used as the project's concrete examples, are in [real-case-examples.md](real-case-examples.md) (visual: [img/real-case-example.png](img/real-case-example.png)): BCA's official warning of a “transaction cancellation” phishing email (23 September 2024), and a J&T iMessage lure reported by Detik on 4 September 2025.

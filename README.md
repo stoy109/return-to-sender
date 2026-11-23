@@ -8,12 +8,12 @@ Phishing and scam messages (fake courier SMS, fake bank OTP requests, "you won a
 
 | Layer | Focus | What is in this repo |
 | --- | --- | --- |
-| **L1 – Laws & habits** | UU ITE / UU PDP duties for providers, a shared-responsibility proposal, and the Stop-Check-Report habit | [`docs/layers.md`](docs/layers.md) |
+| **L1 – Laws & habits** | UU ITE / UU PDP duties for providers, a shared-responsibility proposal, and the Stop-Check-Report habit | [`docs/layers.md`](docs/layers.md), [`docs/real-case-examples.md`](docs/real-case-examples.md) |
 | **L2 – Network** | DNS filtering plus a gateway firewall that blocks the phishing site before the click | [`lab/containerlab`](lab/containerlab), [`lab/gns3`](lab/gns3), [`docs/lab-results.md`](docs/lab-results.md) |
 | **L3 – Accounts & apps** | Passkeys, session revoke, breached-password screening, Enhanced Safe Browsing by policy, application control | [`docs/layers.md`](docs/layers.md) |
 | **L4 – Assistant** | The Stop-Check-Report web app: paste a message, get a risk score, prepare a report you submit yourself | [`app`](app) |
 
-See [`docs/architecture.md`](docs/architecture.md) for how the pieces fit together.
+See [`docs/architecture.md`](docs/architecture.md) for how the pieces fit together. Published, sourced cases (a BCA phishing-email warning from 23 September 2024, and a J&T iMessage lure reported by Detik on 4 September 2025) are in [`docs/real-case-examples.md`](docs/real-case-examples.md), with a one-page visual of the J&T case at [`docs/img/real-case-example.png`](docs/img/real-case-example.png).
 
 ## What the name means
 
@@ -26,7 +26,7 @@ app/                 L4 Stop-Check-Report assistant (Vite + TypeScript + Preact,
 lab/containerlab/    L2 lab: victim, gateway/firewall, DNS filter, fake phishing server (Containerlab + Podman)
 lab/gns3/            The same L2 lab as a GNS3 project (Docker nodes via Podman's Docker-compatible API)
 slides/week12/       Week 12 progress deck (single HTML file) and speaker script
-docs/                Architecture, the four layers, and the 16 Nov / 23 Nov 2026 lab results
+docs/                Architecture, the four layers, 16 Nov / 23 Nov 2026 lab results, and published case examples
 ```
 
 ## Quickstart
@@ -83,7 +83,7 @@ Open `slides/week12/index.html` in a browser (arrow keys to move between slides)
 - **No auto-sending.** The app never submits a report, email or complaint. It prepares text you copy, and buttons that only open the official sites (IASC, CekRekening.id, Patroli Siber, provider abuse forms). You stay in control, which also keeps the project clear of sending other people's personal data under UU PDP.
 - **Nothing is collected.** Checks run in the browser. History and the known-sender list live in `localStorage` on your device only. There is no server, account, analytics or tracking.
 - **The lab is isolated and harmless.** The "phishing" node serves a static page marked **DEMO** on the reserved domain `jne-paket-tertunda.example`. It has no form and collects no credentials. All lab traffic stays between local containers.
-- **Sample data is fictional.** Example messages, domains and the phone number `0812-3456-7890` are made up for the class demo.
+- **App sample data is fictional.** Example messages, domains and the phone number `0812-3456-7890` in the assistant are made up for the class demo. The two cases in [`docs/real-case-examples.md`](docs/real-case-examples.md) are published reports from BCA, Detik and J&T, not messages from our inboxes.
 - The analyzer is an automated rule engine and can be wrong. This is a student project, not legal advice, and is not affiliated with OJK, IASC, Komdigi or Polri.
 
 ## Team
