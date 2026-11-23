@@ -33,6 +33,17 @@ npm run preview   # serve the production build
 
 No API key and no backend are required.
 
+## Deploy
+
+The production build is a static site. After `npm run build`, deploy the `dist/` folder to Cloudflare Workers:
+
+```bash
+npx wrangler deploy
+```
+
+Live URL: https://return-to-sender.r-pinontoan19.workers.dev
+
+
 ## What you can do
 
 - Paste a message. Outline chips show whether the text contains a link, account number, phone number, or message. **Check it** stays off until there are at least 3 characters.

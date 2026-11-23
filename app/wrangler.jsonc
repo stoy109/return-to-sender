@@ -1,0 +1,8 @@
+{
+  "name": "return-to-sender",
+  "compatibility_date": "2026-11-23",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
