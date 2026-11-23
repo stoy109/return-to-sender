@@ -36,7 +36,7 @@ Useful display filter: `dns || http || tcp.flags.syn==1`.
 
 ## GNS3 — 23 November 2026
 
-Verified end-to-end at about 14:56 WIB (UTC+7) on GNS3 2.2.61 with Podman 6.1.3 via `docker.sock`. All five nodes started (green): victim, sw-lan (Linux bridge `br0`), dns, gw and phish, plus the LAN `10.10.1.0/24` and DMZ `10.10.2.0/24` zones. Screenshot of the running topology: [`../lab/gns3/topology-running.png`](../lab/gns3/topology-running.png). The home-directory path that appeared in the GNS3 console warning was redacted before the image was added to the repository.
+Verified end-to-end at about 14:56 WIB (UTC+7) on GNS3 2.2.61 with Podman 6.1.3 via `docker.sock`. All five nodes started (green): victim, sw-lan (Linux bridge `br0`), dns, gw and phish, plus the LAN `10.10.1.0/24` and DMZ `10.10.2.0/24` zones. Screenshot of the running topology: [`../lab/gns3/topology-running.png`](../lab/gns3/topology-running.png). Before the image was added to the repository, the home-directory path in the GNS3 console warning and the hostname in Servers Summary were painted out.
 
 ### Results (`./scripts/demo.sh`)
 
@@ -47,6 +47,13 @@ Verified end-to-end at about 14:56 WIB (UTC+7) on GNS3 2.2.61 with Podman 6.1.3 
 | `curl` by name | `HTTP/1.1 200 OK` from nginx/1.31.8, DEMO page | `Could not resolve host` (`curl: (6)`) |
 | `curl` to `10.10.2.66` | — (not required after the name already opened the page) | `Connection timed out after 5003 milliseconds` (`curl: (28)`) |
 | iptables on `gw` | `-P FORWARD ACCEPT` (no DROP rule) | `-P FORWARD ACCEPT` and `-A FORWARD -d 10.10.2.66/32 -j DROP` |
+
+### Wireshark captures (about 15:00 WIB)
+
+Display filter: `dns || http || tcp.flags.syn==1`. MAC addresses in the ARP rows and in the packet details/hex pane were masked before these screenshots were added to the repository.
+
+- [`../lab/gns3/capture-victim-sw.png`](../lab/gns3/capture-victim-sw.png) — link victim↔sw-lan. Filter OFF: DNS A answer for `jne-paket-tertunda.example` and `HTTP/1.1 200 OK`. Filter ON: DNS "No such name" (NXDOMAIN) and TCP SYN retransmissions to `10.10.2.66` that are never answered.
+- [`../lab/gns3/capture-gw-phish.png`](../lab/gns3/capture-gw-phish.png) — link gw↔phish. Filter OFF: the HTTP session reaches the phishing node (`GET /`, `HTTP/1.1 200 OK`). Filter ON: no packets arrive at the phishing server, which is the evidence that the gateway DROP rule is working.
 
 ### Gotchas
 
